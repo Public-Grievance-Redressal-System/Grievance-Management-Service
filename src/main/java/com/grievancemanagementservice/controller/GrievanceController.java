@@ -39,10 +39,9 @@ public class GrievanceController {
         return grievance;
     }
 
-    @PutMapping
-    public Grievance updateGrievance(@RequestBody Grievance grievance) {
-        grievanceService.update(grievance);
-        return grievance;
+    @PutMapping("/{id}")
+    public Grievance updateGrievance(@RequestBody Grievance grievance, @PathVariable("id") UUID id) {
+        return grievanceService.createOrUpdate(grievance, id);
     }
 
     @DeleteMapping("/{id}")
