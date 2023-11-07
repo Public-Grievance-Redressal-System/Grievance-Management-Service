@@ -32,8 +32,14 @@ public class GrievanceService {
         grievanceRepository.save(grievance);
     }
 
-    public void update(Grievance grievance) {
+    public Grievance createOrUpdate(Grievance grievance, UUID id) {
         grievanceRepository.save(grievance);
+        return grievanceRepository.findById(id)
+                .map(userObj -> {
+                    grievance.setId(id);
+                    return grievanceRepository.save(grievance);
+                })
+                .orElseGet(() -> grievanceRepository.save(grievance));
     }
 
     public void deleteById(UUID id) {
