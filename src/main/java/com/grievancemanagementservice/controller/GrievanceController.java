@@ -1,8 +1,11 @@
 package com.grievancemanagementservice.controller;
 
+import com.grievancemanagementservice.dtos.GrievanceDtoIn;
+import com.grievancemanagementservice.dtos.GrievanceDtoOut;
 import com.grievancemanagementservice.model.Grievance;
 import com.grievancemanagementservice.service.GrievanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,9 +37,9 @@ public class GrievanceController {
     }
 
     @PostMapping
-    public Grievance createGrievance(@RequestBody Grievance grievance) {
-        grievanceService.create(grievance);
-        return grievance;
+    public ResponseEntity<GrievanceDtoOut> createGrievance(@RequestBody GrievanceDtoIn grievanceDto) {
+        ResponseEntity<GrievanceDtoOut> response = grievanceService.create(grievanceDto);
+        return response;
     }
 
     @PutMapping("/{id}")
