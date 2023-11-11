@@ -1,5 +1,6 @@
 package com.grievancemanagementservice.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.grievancemanagementservice.utils.GrievanceStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Entity
 @Table
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Grievance {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
