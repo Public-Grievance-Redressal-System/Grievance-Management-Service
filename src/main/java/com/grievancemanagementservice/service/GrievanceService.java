@@ -33,13 +33,15 @@ public class GrievanceService {
     }
 
     public Grievance createOrUpdate(Grievance grievance, UUID id) {
-        grievanceRepository.save(grievance);
         return grievanceRepository.findById(id)
-                .map(userObj -> {
-                    grievance.setId(id);
-                    return grievanceRepository.save(grievance);
+                .map(grievanceDbObj -> {
+                    System.out.println("Found grievancer ID : " + id);
+                    return grievanceRepository.save(Grievance.getUpdatedGrievance(grievanceDbObj, grievance));
                 })
-                .orElseGet(() -> grievanceRepository.save(grievance));
+                .orElseGet(() -> {
+                    grievance.setCreationDate(new Date());
+                    return grievanceRepository.save(grievance);
+                });
     }
 
     public void deleteById(UUID id) {

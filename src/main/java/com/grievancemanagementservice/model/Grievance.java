@@ -47,4 +47,35 @@ public class Grievance {
     @Column
     @Enumerated(EnumType.STRING)
     private GrievanceStatusEnum status = GrievanceStatusEnum.NOT_ASSIGNED;
+
+    public static Grievance getUpdatedGrievance(Grievance grievanceDbObj, Grievance grievance) {
+        if((grievanceDbObj.getTitle() != null && grievance.getTitle() != null && !grievanceDbObj.getTitle().equals(grievance.getTitle())) ||
+                (grievanceDbObj.getTitle() == null && grievance.getTitle() != null))
+            grievanceDbObj.setTitle(grievance.getTitle());
+
+        if((grievanceDbObj.getBody() != null && grievance.getBody() != null && !grievanceDbObj.getBody().equals(grievance.getBody())) ||
+                (grievanceDbObj.getBody() == null && grievance.getBody() != null))
+            grievanceDbObj.setBody(grievance.getBody());
+
+        if((grievanceDbObj.getStatus() != null && grievance.getStatus() != null && !grievanceDbObj.getStatus().equals(grievance.getStatus())) ||
+                (grievanceDbObj.getStatus() == null && grievance.getStatus() != null)) {
+            grievanceDbObj.setStatus(grievance.getStatus());
+            if(grievance.getStatus().equals(GrievanceStatusEnum.RESOLVED))
+                grievanceDbObj.setClosingDate(new Date());
+        }
+
+        if((grievanceDbObj.getDepartmentId() != null && grievance.getDepartmentId() != null && grievanceDbObj.getDepartmentId() != grievance.getDepartmentId()) ||
+                (grievanceDbObj.getDepartmentId() == null && grievance.getDepartmentId() != null))
+            grievanceDbObj.setDepartmentId(grievance.getDepartmentId());
+
+        if((grievanceDbObj.getAssignedTo() != null && grievance.getAssignedTo() != null && grievanceDbObj.getAssignedTo() != grievance.getAssignedTo()) ||
+                (grievanceDbObj.getAssignedTo() == null && grievance.getAssignedTo() != null))
+            grievanceDbObj.setAssignedTo(grievance.getAssignedTo());
+
+        if((grievanceDbObj.getCreatedBy() != null && grievance.getCreatedBy() != null && grievanceDbObj.getCreatedBy() != grievance.getCreatedBy()) ||
+                (grievanceDbObj.getCreatedBy() == null && grievance.getCreatedBy() != null))
+            grievanceDbObj.setCreatedBy(grievance.getCreatedBy());
+
+        return grievanceDbObj;
+    }
 }
